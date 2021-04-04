@@ -1,0 +1,18 @@
+html , body {
+    margin: 0;
+    width: 100%;
+    background-color: #f0f3f5;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+div.body {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+
+
