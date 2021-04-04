@@ -1,3 +1,21 @@
+<?php
+session_start();
+if (isset($_SESSION['user'])) {
+    require_once('database/mysql.php');
+    if (isset($_POST['title'])) {
+       $title = $_POST['title'];
+       $content = $_POST['content'];
+       $date = date('Y-m-d H:m:s');
+       $user = $_SESSION['user']['id'];
+       $query = "INSERT INTO posts(title, content, create_at,user_id) VALUES ('$title','$content','$date','$user')";
+       $connect = connect();
+       $result = $connect->query($query);
+       header('location:index.php');
+    }
+} else {
+    header('location:login.php');
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,21 +27,10 @@
     <link href="/template/css/page/post.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<header>
-    <div class="container-header">
-        <div class="title">
-            <h2>Diễn đàn</h2>
-        </div>
-        <div class="user">
-            <div class="user-login">
-                <h2><a href="/login.php">Login</a></h2>
-            </div>
-            <div class="user-register">
-                <h2><a href="register.php">Register</a></h2>
-            </div>
-        </div>
-    </div>
-</header>
+<?php
+require_once('components/header.php');
+?>
+
 <div class="body">
     <div class="post-content">
         <form action="" method="post">
@@ -31,18 +38,18 @@
                 <label>Tiêu đề bài viết</label>
                 <input type="text" name="title">
             </div>
-            <textarea id="editor1"></textarea>
+            <textarea id="editor1" name="content"></textarea>
             <button type="submit">Lưu</button>
         </form>
     </div>
 </div>
 
-<footer>
-    <p>footer</p>
-</footer>
-<script src="library/ckeditor/ckeditor.js"></script>
+<?php
+require_once("components/footer.php");
+?>
+<script src="/template/library/ckeditor/ckeditor.js"></script>
 <script>
-    CKEDITOR.replace( 'editor1' );
+    CKEDITOR.replace('editor1');
 </script>
 </body>
 </html>

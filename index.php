@@ -4,6 +4,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
 require_once('database/mysql.php');
+$connect = connect();
+$query = "SELECT posts.*, users.username FROM posts join users ON posts.user_id = users.id ORDER BY posts.create_at DESC";
+$result = $connect->query($query);
+$result = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,7 +20,7 @@ require_once('database/mysql.php');
     <link href="/template/css/page/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<?php require_once('components/header.php')?>
+<?php require_once('components/header.php') ?>
 <div class="body">
     <div class="list-post">
         <div class="list-header">
@@ -26,48 +30,17 @@ require_once('database/mysql.php');
             <div class="view">View</div>
         </div>
         <ul>
+            <?php
+            foreach ($result as $value):
+            ?>
             <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
+                <div class="topic"><a href="detail.php?id=<?=$value['id']?>"><?=$value['title']?></a>
+                    <p>by <?=$value['username']?></p></div>
+                <div class="date"><?= date('d-m-Y H:m:s',strtotime($value['create_at']))?></div>
                 <div class="reply">11</div>
-                <div class="view">12323</div>
+                <div class="view"><?= $value['views']?></div>
             </li>
-            <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
-                <div class="reply">11</div>
-                <div class="view">12323</div>
-            </li>
-            <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
-                <div class="reply">11</div>
-                <div class="view">12323</div>
-            </li>
-            <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
-                <div class="reply">11</div>
-                <div class="view">12323</div>
-            </li>
-            <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
-                <div class="reply">11</div>
-                <div class="view">12323</div>
-            </li>
-            <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
-                <div class="reply">11</div>
-                <div class="view">12323</div>
-            </li>
-            <li class="">
-                <div class="topic"><a href="#">Coconut Cod</a><p>by chutchut</p></div>
-                <div class="date">Nov,12, 2021</div>
-                <div class="reply">11</div>
-                <div class="view">12323</div>
-            </li>
+            <?php endforeach;?>
         </ul>
         <div class="paginate">
             <div class="paginate-items">
@@ -85,7 +58,7 @@ require_once('database/mysql.php');
     </div>
 </div>
 
-<?php require_once('components/footer.php')?>
+<?php require_once('components/footer.php') ?>
 </body>
 </html>
 

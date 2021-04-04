@@ -13,7 +13,7 @@ require_once ('mysql.php');
   id int unsigned auto_increment primary key,
   title varchar(255) not null,
   content longtext not null ,
-  create_at date null,
+  create_at datetime null,
   user_id int unsigned not null,
   views int default 0,
   FOREIGN KEY (user_id) references users(id)
@@ -22,7 +22,7 @@ $connect->query('CREATE TABLE db.comments (
   id int unsigned auto_increment primary key,
   user_id int unsigned not null,
   comment text not null ,
-  create_at date null,
+  create_at datetime null,
   post_id int unsigned not null,
   FOREIGN KEY (user_id) references users(id),
   FOREIGN KEY (post_id) references posts(id)

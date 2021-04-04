@@ -1,7 +1,7 @@
 <header>
     <div class="container-header">
         <div class="title">
-            <h2>Diễn đàn</h2>
+            <h2><a href="index.php">Diễn đàn</a></h2>
         </div>
         <?php if(!isset($_SESSION['user'])):?>
             <div class="user">

@@ -9,6 +9,10 @@ header .container-header div.title{
     width: 80%;
     padding-left: 30px;
 }
+header .container-header div.title a{
+    color: white;
+    text-decoration: none;
+}
 header .container-header div.user{
     display: inline-block;
 }
